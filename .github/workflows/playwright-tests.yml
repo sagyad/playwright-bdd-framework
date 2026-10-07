@@ -35,10 +35,10 @@
                 # Install project dependencies
                 - name: Install dependencies
                   run: |
+                    rm -f package-lock.json
                     npm install
                     echo "=== Checking cucumber binary ==="
                     ls ./node_modules/.bin/cucumber-js && echo "FOUND" || echo "NOT FOUND"
-                    ls ./node_modules/@cucumber/cucumber/bin/cucumber.js && echo "FOUND ALT" || echo "NOT FOUND ALT"
                     
                 # Install Playwright browsers and system dependencies
                 - name: Install Playwright browsers
