@@ -1,113 +1,117 @@
-# CI/CD pipeline — runs Playwright BDD tests on every push and pull request
-# Generates Allure report and deploys to GitHub Pages
 
-name: Playwright BDD Tests
+          # CI/CD pipeline — runs Playwright BDD tests on every push and pull request
+          # Generates Allure report and deploys to GitHub Pages
 
-on:
-  workflow_dispatch:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+          name: Playwright BDD Tests
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
+          on:
+            workflow_dispatch:
+            push:
+              branches: [main]
+            pull_request:
+              branches: [main]
 
-    # Required for GitHub Pages deployment
-    permissions:
-      contents: write
-      pages: write
+          jobs:
+            test:
+              runs-on: ubuntu-latest
+              timeout-minutes: 15
 
-    steps:
-      # Checkout the repository code
-      - name: Checkout code
-        uses: actions/checkout@v4
+              permissions:
+                contents: write
+                pages: write
 
-      # Set up Node.js runtime
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: "npm"
+              steps:
+                # Checkout the repository code
+                - name: Checkout code
+                  uses: actions/checkout@v4
 
-      # Install project dependencies
-      - name: Install dependencies
-        run: npm ci
+                # Set up Node.js runtime
+                - name: Setup Node.js
+                  uses: actions/setup-node@v4
+                  with:
+                    node-version: 18
+                    cache: "npm"
 
-      # Install Playwright browsers and system dependencies
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+                # Install project dependencies
+                - name: Install dependencies
+                  run: npm ci
 
-      # Create .env file for CI environment
-      - name: Create .env file
-        run: |
-          echo "BASE_URL=https://www.saucedemo.com" > .env
-          echo "BROWSER=chromium" >> .env
-          echo "HEADLESS=true" >> .env
+                # Install Playwright browsers and system dependencies
+                - name: Install Playwright browsers
+                  run: npx playwright install --with-deps chromium
 
-      # Run the Cucumber BDD tests
-      - name: Run tests
-        run: npm test
-        continue-on-error: true
+                # Create .env file for CI environment
+                - name: Create .env file
+                  run: |
+                    echo "BASE_URL=https://www.saucedemo.com" > .env
+                    echo "BROWSER=chromium" >> .env
+                    echo "HEADLESS=true" >> .env
 
-      # Debug — check if allure-results were generated
-      - name: Check Allure results
-        if: always()
-        run: |
-          echo "Checking allure-results directory:"
-          ls -la allure-results/ || echo "allure-results directory not found"
+                # Run the Cucumber BDD tests
+                - name: Run tests
+                  run: npm test
+                  continue-on-error: true
 
-      # Upload Allure results as artifact for reporting
-      - name: Upload Allure results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: allure-results/
-          retention-days: 30
-          if-no-files-found: warn
+                # Upload Cucumber HTML report as artifact
+                - name: Upload Cucumber report
+                  if: always()
+                  uses: actions/upload-artifact@v4
+                  with:
+                    name: cucumber-report
+                    path: reports/
+                    retention-days: 30
+                    if-no-files-found: warn
 
-      # Upload Cucumber HTML report as artifact
-      - name: Upload Cucumber report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cucumber-report
-          path: reports/
-          retention-days: 30
-          if-no-files-found: warn
+                # Upload Allure results as artifact
+                - name: Upload Allure results
+                  if: always()
+                  uses: actions/upload-artifact@v4
+                  with:
+                    name: allure-results
+                    path: allure-results/
+                    retention-days: 30
+                    if-no-files-found: warn
 
-      # Get Allure history from gh-pages branch
-      - name: Get Allure history
-        uses: actions/checkout@v4
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
+                # Install Java (required by Allure CLI)
+                - name: Setup Java
+                  if: always()
+                  uses: actions/setup-java@v4
+                  with:
+                    distribution: temurin
+                    java-version: 17
 
-      # Copy previous history if it exists
-      - name: Copy Allure history
-        if: always()
-        run: |
-          mkdir -p allure-results/history
-          cp -r gh-pages/history/* allure-results/history/ 2>/dev/null || echo "No previous history"
+                # Install Allure CLI
+                - name: Install Allure CLI
+                  if: always()
+                  run: npm install -g allure-commandline
 
-      # Generate Allure report
-      - name: Generate Allure report
-        if: always()
-        uses: simple-elf/allure-report-action@v1.9
-        with:
-          allure_results: allure-results
-          allure_history: allure-history
-          keep_reports: 10
+                # Get previous Allure history from gh-pages
+                - name: Get Allure history
+                  if: always()
+                  continue-on-error: true
+                  run: |
+                    git fetch origin gh-pages --depth=1 || true
+                    mkdir -p allure-results/history
+                    git checkout origin/gh-pages -- history/ 2>/dev/null && cp -r history/* allure-results/history/ || echo "No previous history found"
 
-      # Deploy the Allure report to GitHub Pages
-      - name: Deploy Allure to GitHub Pages
-        if: always() && github.ref == 'refs/heads/main'
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-history
+                # Generate Allure report
+                - name: Generate Allure report
+                  if: always()
+                  run: allure generate allure-results --clean -o allure-report
+
+                # Prepare deployment folder with history
+                - name: Prepare GitHub Pages
+                  if: always()
+                  run: |
+                    mkdir -p allure-deploy
+                    cp -r allure-report/* allure-deploy/
+                    cp -r allure-report/history allure-deploy/ 2>/dev/null || true
+
+                # Deploy the Allure report to GitHub Pages
+                - name: Deploy Allure to GitHub Pages
+                  if: always() && github.ref == 'refs/heads/main'
+                  uses: peaceiris/actions-gh-pages@v4
+                  with:
+                    github_token: ${{ secrets.GITHUB_TOKEN }}
+                    publish_dir: allure-deploy
+
