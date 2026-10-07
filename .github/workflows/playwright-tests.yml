@@ -86,13 +86,15 @@
                   run: npm install -g allure-commandline
 
                 # Get previous Allure history from gh-pages
-                - name: Get Allure history
+                - name: Check Allure results
                   if: always()
-                  continue-on-error: true
                   run: |
-                    git fetch origin gh-pages --depth=1 || true
-                    mkdir -p allure-results/history
-                    git checkout origin/gh-pages -- history/ 2>/dev/null && cp -r history/* allure-results/history/ || echo "No previous history found"
+                    echo "=== allure-results directory ==="
+                    ls -la allure-results/ 2>/dev/null || echo "MISSING: allure-results folder not found"
+                    echo "=== reports directory ==="
+                    ls -la reports/ 2>/dev/null || echo "MISSING: reports folder not found"
+                    echo "=== cucumber.js config ==="
+                    cat cucumber.js
 
                 # Generate Allure report
                 - name: Generate Allure report
