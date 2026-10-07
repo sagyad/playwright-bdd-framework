@@ -29,7 +29,7 @@
                 - name: Setup Node.js
                   uses: actions/setup-node@v4
                   with:
-                    node-version: 18
+                    node-version: 22
                     cache: "npm"
 
                 # Install project dependencies
@@ -53,7 +53,7 @@
 
                 # Run the Cucumber BDD tests
                 - name: Run tests
-                  run: ./node_modules/.bin/cucumber-js
+                  run: npm test
                   continue-on-error: true
 
                 # Upload Cucumber HTML report as artifact
