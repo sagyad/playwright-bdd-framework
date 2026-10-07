@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Compiled output
+dist/
+
+# Test reports and artifacts
+reports/
+allure-results/
+test-results/
+playwright-report/
+
+# Environment variables
+.env
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE and editor config
+.vscode/
+.idea/
+*.swp
+
+# Replit
+.replit
+replit.nix
+.cache/
+allure-results
+allure-report

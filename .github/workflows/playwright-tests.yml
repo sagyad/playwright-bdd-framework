@@ -1,0 +1,77 @@
+
+# CI/CD pipeline — runs Playwright BDD tests on every push and pull request
+# Generates Allure report and deploys to GitHub Pages
+
+name: Playwright BDD Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # Checkout the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up Node.js runtime
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "npm"
+
+      # Install project dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # Install Playwright browsers and system dependencies
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      # Run the Cucumber BDD tests
+      - name: Run tests
+        run: npm test
+        continue-on-error: true
+
+      # Upload Allure results as artifact for reporting
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results/
+          retention-days: 30
+
+      # Upload Cucumber HTML report as artifact
+      - name: Upload Cucumber report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-report
+          path: reports/
+          retention-days: 30
+
+      # Generate and deploy Allure report to GitHub Pages
+      - name: Allure Report
+        if: always()
+        uses: simple-elf/allure-report-action@v1.9
+        with:
+          allure_results: allure-results
+          allure_history: allure-history
+          keep_reports: 10
+
+      # Deploy the Allure report to GitHub Pages
+      - name: Deploy Allure to GitHub Pages
+        if: always() && github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: allure-history
+
