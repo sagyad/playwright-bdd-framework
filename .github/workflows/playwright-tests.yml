@@ -57,6 +57,14 @@ jobs:
           name: cucumber-report
           path: reports/
           retention-days: 30
+      # Generate Allure report from results
+      - name: Get Allure history
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
 
       # Generate and deploy Allure report to GitHub Pages
       - name: Allure Report
