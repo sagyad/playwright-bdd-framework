@@ -49,7 +49,7 @@
 
                 # Run the Cucumber BDD tests
                 - name: Run tests
-                  run: npm test
+                  run: npx cucumber-js
                   continue-on-error: true
 
                 # Upload Cucumber HTML report as artifact
