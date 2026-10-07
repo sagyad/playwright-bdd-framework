@@ -34,8 +34,10 @@
 
                 # Install project dependencies
                 - name: Install dependencies
-                  run: npm ci
-
+                  run: |
+                    npm ci
+                    ls ./node_modules/.bin/cucumber-js || echo "cucumber-js binary NOT found"
+                    
                 # Install Playwright browsers and system dependencies
                 - name: Install Playwright browsers
                   run: npx playwright install --with-deps chromium
@@ -49,7 +51,7 @@
 
                 # Run the Cucumber BDD tests
                 - name: Run tests
-                  run: npx cucumber-js
+                  run: ./node_modules/.bin/cucumber-js
                   continue-on-error: true
 
                 # Upload Cucumber HTML report as artifact
