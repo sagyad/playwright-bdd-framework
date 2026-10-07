@@ -1,0 +1,22 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"As a user of SauceDemo
+  I want to log in with valid and invalid credentials
+  So that I can verify access to the product inventory","381","Login with multiple user types","","2026-10-07","passed","2026-10-07","","","",""
+"As a user of SauceDemo
+  I want to log in with valid and invalid credentials
+  So that I can verify access to the product inventory","763","Successful login with standard user","","2026-10-07","failed","2026-10-07","","","",""
+"As a user of SauceDemo
+  I want to log in with valid and invalid credentials
+  So that I can verify access to the product inventory","387","Login with multiple user types","","2026-10-07","passed","2026-10-07","","","",""
+"As a user of SauceDemo
+  I want to log in with valid and invalid credentials
+  So that I can verify access to the product inventory","411","Login with multiple user types","","2026-10-07","passed","2026-10-07","","","",""
+"As a user of SauceDemo
+  I want to log in with valid and invalid credentials
+  So that I can verify access to the product inventory","464","Failed login with locked out user","","2026-10-07","passed","2026-10-07","","","",""
+"As a user of SauceDemo
+  I want to log in with valid and invalid credentials
+  So that I can verify access to the product inventory","375","Login with multiple user types","","2026-10-07","passed","2026-10-07","","","",""
+"As a user of SauceDemo
+  I want to log in with valid and invalid credentials
+  So that I can verify access to the product inventory","380","Failed login with invalid credentials","","2026-10-07","passed","2026-10-07","","","",""
