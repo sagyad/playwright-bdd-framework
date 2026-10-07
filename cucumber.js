@@ -9,7 +9,7 @@ module.exports = {
       "progress-bar",
       "html:reports/cucumber-report.html",
       "json:reports/cucumber-report.json",
-      "./node_modules/allure-cucumberjs/reporter.js",
+      "allure-cucumberjs/reporter",
     ],
     paths: ["src/features/**/*.feature"],
     publishQuiet: true,
