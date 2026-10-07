@@ -14,6 +14,7 @@ export class InventoryPage extends BasePage {
   }
 
   async getItemCount(): Promise<number> {
-    return await this.getElementCount(this.invetoryItems);
+    await this.page.waitForSelector(this.inventoryItems);
+    return await this.getElementCount(this.inventoryItems);
   }
 }
