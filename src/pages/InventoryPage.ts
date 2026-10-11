@@ -2,7 +2,7 @@ import { Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export class InventoryPage extends BasePage {
-  private invetoryItems = ".inventory_item";
+  private inventoryItems = ".inventory_item";
   constructor(page: Page) {
     super(page);
   }
