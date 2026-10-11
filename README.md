@@ -56,29 +56,37 @@ This framework demonstrates a scalable approach to end-to-end UI test automation
 ---
 
 ## Project Structure
-playwright-bdd-framework/ ├── .github/ │ └── workflows/ │ └── test.yml # GitHub Actions CI/CD pipeline ├── src/ │ ├── features/ │ │ └── login.feature # Gherkin feature files │ ├── pages/ │ │ ├── BasePage.ts # Base page with common actions │ │ ├── LoginPage.ts # Login page object │ │ └── InventoryPage.ts # Inventory page object │ ├── steps/ │ │ └── loginSteps.ts # Cucumber step definitions │ └── support/ │ ├── hooks.ts # Before/After hooks (browser lifecycle) │ └── world.ts # Custom Cucumber World ├── allure-results/ # Raw Allure test results ├── allure-report/ # Generated Allure HTML report ├── cucumber.js # Cucumber configuration ├── tsconfig.json # TypeScript configuration ├── package.json # Dependencies and scripts └── README.md
 
-
----
-
-## Prerequisites
-
-- **Node.js** >= 18.x
-- **npm** >= 9.x
-
----
-
-## Installation
-
-```bash
-# Clone the repository
+```text
+playwright-bdd-framework/
+├── .github/
+│   └── workflows/
+│       └── test.yml
+├── src/
+│   ├── features/
+│   │   └── login.feature
+│   ├── pages/
+│   │   ├── BasePage.ts
+│   │   ├── LoginPage.ts
+│   │   └── InventoryPage.ts
+│   ├── steps/
+│   │   └── loginSteps.ts
+│   └── support/
+│       ├── hooks.ts
+│       └── world.ts
+├── allure-results/
+├── allure-report/
+├── cucumber.js
+├── tsconfig.json
+├── package.json
+└── README.md
+Prerequisites
+Node.js >= 18.x
+npm >= 9.x
+Installation
 git clone https://github.com/sagyad/playwright-bdd-framework.git
 cd playwright-bdd-framework
-
-# Install dependencies
 npm install
-
-# Install Playwright browsers
 npx playwright install
 Running Tests
 # Run all tests
@@ -93,14 +101,22 @@ npx cucumber-js src/features/login.feature
 # TypeScript compilation check
 npx tsc --noEmit
 Allure Reporting
-# Generate Allure report (after test run)
+# Generate Allure report after test run
 npx allure generate allure-results --clean -o allure-report
 
 # Open Allure report in browser
 npx allure open allure-report
 Sample Report
 Metric
+
+
+
+
 Value
+
+
+
+
 Total Test Cases	7
 Pass Rate	100%
 Duration	~2.7s
@@ -116,7 +132,6 @@ Pipeline status is visible via the badge at the top of this README.
 
 Writing Tests
 1. Create a Feature File
-# src/features/login.feature
 Feature: SauceDemo Login
 
   Scenario: Successful login with valid credentials
@@ -124,7 +139,6 @@ Feature: SauceDemo Login
     When I login with "standard_user" and "secret_sauce"
     Then I should be on the inventory page
 2. Create a Page Object
-// src/pages/LoginPage.ts
 import { Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
@@ -143,9 +157,7 @@ export class LoginPage extends BasePage {
     await this.page.click(this.loginButton);
   }
 }
-
 3. Create Step Definitions
-// src/steps/loginSteps.ts
 import { Given, When, Then } from "@cucumber/cucumber";
 import { LoginPage } from "../pages/LoginPage";
 import { InventoryPage } from "../pages/InventoryPage";
@@ -165,16 +177,22 @@ Then("I should be on the inventory page", async function () {
   const isOnPage = await inventoryPage.isOnInventoryPage();
   expect(isOnPage).toBeTruthy();
 });
-
-
 Design Patterns
 Pattern
+
+
+
+
 Implementation
-Page Object Model (POM)	Each page is a class encapsulating selectors and actions
-Base Page	Common methods (navigate, click, getText, etc.) inherited by all pages
+
+
+
+
+Page Object Model	Each page is a class encapsulating selectors and actions
+Base Page	Common methods inherited by all pages
 BDD (Cucumber)	Gherkin feature files bridge business and technical requirements
 Custom World	Shared Playwright browser context across step definitions
-Hooks	Browser setup/teardown managed via Cucumber Before/After hooks
+Hooks	Browser setup/teardown via Cucumber Before/After hooks
 Contributing
 Fork the repository
 Create a feature branch (git checkout -b feature/add-cart-tests)
@@ -182,10 +200,6 @@ Commit your changes (git commit -m "feat: add cart page tests")
 Push to the branch (git push origin feature/add-cart-tests)
 Open a Pull Request
 License
-This project is licensed under the MIT License — see the LICENSE file for details.
+This project is licensed under the MIT License.
 
-Built with  using Playwright, Cucumber & TypeScript
-
-
-
-
+Built with using Playwright, Cucumber & TypeScript
