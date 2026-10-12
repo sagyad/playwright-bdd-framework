@@ -57,7 +57,6 @@ This framework demonstrates a scalable approach to end-to-end UI test automation
 
 ## Project Structure
 
-```text
 playwright-bdd-framework/
 ├── .github/
 │   └── workflows/
@@ -80,15 +79,18 @@ playwright-bdd-framework/
 ├── tsconfig.json
 ├── package.json
 └── README.md
-Prerequisites
+
+## Prerequisites 
 Node.js >= 18.x
 npm >= 9.x
-Installation
+
+## Installation
 git clone https://github.com/sagyad/playwright-bdd-framework.git
 cd playwright-bdd-framework
 npm install
 npx playwright install
-Running Tests
+
+## Running Tests
 # Run all tests
 npm test
 
@@ -100,28 +102,23 @@ npx cucumber-js src/features/login.feature
 
 # TypeScript compilation check
 npx tsc --noEmit
-Allure Reporting
+
+## Allure Reporting
 # Generate Allure report after test run
 npx allure generate allure-results --clean -o allure-report
 
 # Open Allure report in browser
 npx allure open allure-report
-Sample Report
-Metric
 
+### Sample Report
+| Metric | Value |
+|------------|---------|
+| Total Test Cases | 7 |
+| Pass Rate | 100% |
+| Duration | ~2.7s |
+| Feature Coverage | SauceDemo Login |
 
-
-
-Value
-
-
-
-
-Total Test Cases	7
-Pass Rate	100%
-Duration	~2.7s
-Feature Coverage	SauceDemo Login
-CI/CD Pipeline
+## CI/CD Pipeline
 The framework includes a GitHub Actions workflow that automatically:
 
 🔄 Triggers on push/PR to main
@@ -130,15 +127,16 @@ The framework includes a GitHub Actions workflow that automatically:
 📊 Generates and publishes the Allure report
 Pipeline status is visible via the badge at the top of this README.
 
-Writing Tests
-1. Create a Feature File
+## Writing Tests
+### 1. Create a Feature File
 Feature: SauceDemo Login
 
   Scenario: Successful login with valid credentials
     Given I am on the login page
     When I login with "standard_user" and "secret_sauce"
     Then I should be on the inventory page
-2. Create a Page Object
+    
+### 2. Create a Page Object
 import { Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
@@ -157,7 +155,8 @@ export class LoginPage extends BasePage {
     await this.page.click(this.loginButton);
   }
 }
-3. Create Step Definitions
+
+# 3. Create Step Definitions
 import { Given, When, Then } from "@cucumber/cucumber";
 import { LoginPage } from "../pages/LoginPage";
 import { InventoryPage } from "../pages/InventoryPage";
@@ -177,24 +176,21 @@ Then("I should be on the inventory page", async function () {
   const isOnPage = await inventoryPage.isOnInventoryPage();
   expect(isOnPage).toBeTruthy();
 });
-Design Patterns
-Pattern
 
 
+## Design Patterns
+
+| Pattern | Implementation |
+|------------|---------|
+| Page Object Model | Each page is a class encapsulating selectors and actions |
+| Base Page | Common methods inherited by all pages |
+| BDD Cucumber | Gherkin feature files bridge business and technical requirements |
+| Custom World | Shared Playwright browser context across step definitions |
+| Hooks | Browser setup and teardown via Cucumber Before and After hooks |
 
 
-Implementation
-
-
-
-
-Page Object Model	Each page is a class encapsulating selectors and actions
-Base Page	Common methods inherited by all pages
-BDD (Cucumber)	Gherkin feature files bridge business and technical requirements
-Custom World	Shared Playwright browser context across step definitions
-Hooks	Browser setup/teardown via Cucumber Before/After hooks
-Contributing
-Fork the repository
+## Contributing
+# Fork the repository
 Create a feature branch (git checkout -b feature/add-cart-tests)
 Commit your changes (git commit -m "feat: add cart page tests")
 Push to the branch (git push origin feature/add-cart-tests)
@@ -202,4 +198,4 @@ Open a Pull Request
 License
 This project is licensed under the MIT License.
 
-Built with using Playwright, Cucumber & TypeScript
+Built using Playwright, Cucumber & TypeScript EOF
