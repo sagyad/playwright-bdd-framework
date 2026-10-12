@@ -128,7 +128,7 @@ The framework includes a GitHub Actions workflow that automatically:
 Pipeline status is visible via the badge at the top of this README.
 
 ## Writing Tests
-### 1. Create a Feature File
+#### 1. Create a Feature File
 Feature: SauceDemo Login
 
   Scenario: Successful login with valid credentials
@@ -136,7 +136,7 @@ Feature: SauceDemo Login
     When I login with "standard_user" and "secret_sauce"
     Then I should be on the inventory page
     
-###### 2. Create a Page Object
+#### 2. Create a Page Object
 import { Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
@@ -156,7 +156,7 @@ export class LoginPage extends BasePage {
   }
 }
 
-###### 3. Create Step Definitions
+#### 3. Create Step Definitions
 import { Given, When, Then } from "@cucumber/cucumber";
 import { LoginPage } from "../pages/LoginPage";
 import { InventoryPage } from "../pages/InventoryPage";
