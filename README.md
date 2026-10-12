@@ -90,24 +90,24 @@ cd playwright-bdd-framework
 npm install
 npx playwright install
 
-## Running Tests
-# Run all tests
+### Running Tests
+#### Run all tests
 npm test
 
-# Run with specific tag
+#### Run with specific tag
 npx cucumber-js --tags "@smoke"
 
-# Run a specific feature file
+#### Run a specific feature file
 npx cucumber-js src/features/login.feature
 
-# TypeScript compilation check
+#### TypeScript compilation check
 npx tsc --noEmit
 
 ## Allure Reporting
-# Generate Allure report after test run
+##### Generate Allure report after test run
 npx allure generate allure-results --clean -o allure-report
 
-# Open Allure report in browser
+##### Open Allure report in browser
 npx allure open allure-report
 
 ### Sample Report
@@ -136,7 +136,7 @@ Feature: SauceDemo Login
     When I login with "standard_user" and "secret_sauce"
     Then I should be on the inventory page
     
-### 2. Create a Page Object
+###### 2. Create a Page Object
 import { Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
@@ -156,7 +156,7 @@ export class LoginPage extends BasePage {
   }
 }
 
-# 3. Create Step Definitions
+###### 3. Create Step Definitions
 import { Given, When, Then } from "@cucumber/cucumber";
 import { LoginPage } from "../pages/LoginPage";
 import { InventoryPage } from "../pages/InventoryPage";
@@ -190,12 +190,13 @@ Then("I should be on the inventory page", async function () {
 
 
 ## Contributing
-# Fork the repository
+##### Fork the repository
 Create a feature branch (git checkout -b feature/add-cart-tests)
 Commit your changes (git commit -m "feat: add cart page tests")
 Push to the branch (git push origin feature/add-cart-tests)
 Open a Pull Request
-License
+
+## License
 This project is licensed under the MIT License.
 
 Built using Playwright, Cucumber & TypeScript EOF
