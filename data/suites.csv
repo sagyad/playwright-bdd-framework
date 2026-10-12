@@ -1,22 +1,22 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
 "As a user of SauceDemo
   I want to log in with valid and invalid credentials
-  So that I can verify access to the product inventory","353","Login with multiple user types","","2026-10-12","passed","2026-10-12","","","",""
+  So that I can verify access to the product inventory","383","Login with multiple user types","","2026-10-12","passed","2026-10-12","","","",""
 "As a user of SauceDemo
   I want to log in with valid and invalid credentials
-  So that I can verify access to the product inventory","395","Login with multiple user types","","2026-10-12","passed","2026-10-12","","","",""
+  So that I can verify access to the product inventory","405","Login with multiple user types","","2026-10-12","passed","2026-10-12","","","",""
 "As a user of SauceDemo
   I want to log in with valid and invalid credentials
-  So that I can verify access to the product inventory","325","Failed login with locked out user","","2026-10-12","passed","2026-10-12","","","",""
+  So that I can verify access to the product inventory","380","Failed login with invalid credentials","","2026-10-12","passed","2026-10-12","","","",""
 "As a user of SauceDemo
   I want to log in with valid and invalid credentials
-  So that I can verify access to the product inventory","362","Failed login with invalid credentials","","2026-10-12","passed","2026-10-12","","","",""
+  So that I can verify access to the product inventory","716","Successful login with standard user","","2026-10-12","passed","2026-10-12","","","",""
 "As a user of SauceDemo
   I want to log in with valid and invalid credentials
-  So that I can verify access to the product inventory","316","Login with multiple user types","","2026-10-12","passed","2026-10-12","","","",""
+  So that I can verify access to the product inventory","384","Failed login with locked out user","","2026-10-12","passed","2026-10-12","","","",""
 "As a user of SauceDemo
   I want to log in with valid and invalid credentials
-  So that I can verify access to the product inventory","1778","Successful login with standard user","","2026-10-12","passed","2026-10-12","","","",""
+  So that I can verify access to the product inventory","396","Login with multiple user types","","2026-10-12","passed","2026-10-12","","","",""
 "As a user of SauceDemo
   I want to log in with valid and invalid credentials
-  So that I can verify access to the product inventory","427","Login with multiple user types","","2026-10-12","passed","2026-10-12","","","",""
+  So that I can verify access to the product inventory","585","Login with multiple user types","","2026-10-12","passed","2026-10-12","","","",""
